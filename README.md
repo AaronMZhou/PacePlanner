@@ -44,10 +44,23 @@ A production-grade Next.js 14 application that connects to Canvas (Instructure) 
    echo "OPENAI_API_KEY=sk-..." >> .env.local
    ```
 
-3. **Set up the database:**
-   ```bash
-   pnpm prisma db push
-   ```
+3. **Connect Prisma to Supabase:**
+   - Create a Supabase project and note the **Project URL**, **anon key**, and **service role key**.
+   - In the Supabase dashboard, open **Settings → Database → Connection string → URI** and copy both the pooled (pgbouncer) and direct URLs.
+   - Update `.env.local` with:
+     ```
+     SUPABASE_URL=...
+     SUPABASE_ANON_KEY=...
+     SUPABASE_SERVICE_ROLE_KEY=...
+     DATABASE_URL="postgresql://...pgbouncer=true&connection_limit=1&pool_timeout=30&sslmode=require"
+     DIRECT_DATABASE_URL="postgresql://...sslmode=require"
+     ```
+   - Apply the Prisma schema to Supabase:
+     ```bash
+     pnpm prisma migrate deploy
+     # or, during early development only:
+     pnpm prisma db push
+     ```
 
 4. **Start the development server:**
    ```bash
@@ -129,7 +142,10 @@ pnpm test
 # View database in Prisma Studio
 pnpm db:studio
 
-# Reset database
+# Apply migrations (Supabase)
+pnpm prisma migrate deploy
+
+# (Development only) Recreate schema
 pnpm prisma db push --force-reset
 ```
 

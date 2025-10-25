@@ -1,7 +1,9 @@
 {
   "/connect/page": "app/connect/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/api/canvas/upcoming/route": "app/api/canvas/upcoming/route.js",
-  "/api/subtasks/[id]/route": "app/api/subtasks/[id]/route.js",
-  "/api/assignments/route": "app/api/assignments/route.js"
+  "/api/plan/recompute/route": "app/api/plan/recompute/route.js",
+  "/api/assignments/route": "app/api/assignments/route.js",
+  "/page": "app/page.js",
+  "/api/connect/route": "app/api/connect/route.js",
+  "/api/canvas/upcoming/route": "app/api/canvas/upcoming/route.js"
 }
