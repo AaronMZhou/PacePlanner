@@ -232,17 +232,21 @@ export default function WeekGrid({
     return `${startLabel}, ${startYear} - ${endLabel}, ${endYear}`
   }, [formatterCache, weekDates])
 
+  type SubtaskWithoutAssignment = Omit<Subtask, 'assignment'>
+
   const handlePreviewSubtask = (
-    subtask: Subtask,
+    subtask: SubtaskWithoutAssignment,
     assignment: Subtask['assignment'],
     date: Date,
     options?: { edit?: boolean }
   ) => {
+    const subtaskWithAssignment: Subtask = { ...subtask, assignment }
+
     setShouldAutoEditPreview(Boolean(options?.edit))
     setPreviewError(null)
     setIsSavingPreview(false)
     setPreviewSubtask({
-      subtask,
+      subtask: subtaskWithAssignment,
       assignment,
       date
     })
