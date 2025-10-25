@@ -1,0 +1,7 @@
+{
+  "/connect/page": "app/connect/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/api/canvas/upcoming/route": "app/api/canvas/upcoming/route.js",
+  "/api/subtasks/[id]/route": "app/api/subtasks/[id]/route.js",
+  "/api/assignments/route": "app/api/assignments/route.js"
+}
