@@ -1,5 +1,6 @@
 // app/api/connect/route.ts
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
@@ -21,19 +22,24 @@ export async function POST(request: NextRequest) {
     
     // Verify token with Canvas
     const user = await verifyCanvasToken(validatedBaseUrl, validatedToken)
+    const canvasUserKey = `${validatedBaseUrl}:${user.id}`
     
     // Encrypt token
     const { ciphertext, iv } = await encrypt(validatedToken)
     
     // Create or update user
     const existingUser = await prisma.user.findFirst({
-      where: { canvasBaseUrl: validatedBaseUrl }
+      where: {
+        canvasUserKey
+      }
     })
     
     const dbUser = existingUser
       ? await prisma.user.update({
           where: { id: existingUser.id },
           data: {
+            canvasBaseUrl: validatedBaseUrl,
+            canvasUserKey,
             encToken: ciphertext,
             iv: iv,
           }
@@ -41,6 +47,7 @@ export async function POST(request: NextRequest) {
       : await prisma.user.create({
           data: {
             canvasBaseUrl: validatedBaseUrl,
+            canvasUserKey,
             encToken: ciphertext,
             iv: iv,
             settings: {

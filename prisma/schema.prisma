@@ -15,6 +15,7 @@ model User {
   id              String   @id @default(cuid())
   createdAt       DateTime @default(now())
   canvasBaseUrl   String
+  canvasUserKey   String?  @unique
   encToken        String   // AES-GCM ciphertext (base64)
   iv              String   // AES-GCM IV (base64)
   settings        UserSettings?
