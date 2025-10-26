@@ -10,40 +10,8 @@ import { setUserCookie } from '@/lib/cookies'
 
 const prisma = new PrismaClient()
 
-// Rate limiting (simple in-memory store)
-const rateLimit = new Map<string, { count: number; resetTime: number }>()
-const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute
-const RATE_LIMIT_MAX = 10 // 10 requests per minute
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now()
-  const userLimit = rateLimit.get(ip)
-  
-  if (!userLimit || now > userLimit.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW })
-    return true
-  }
-  
-  if (userLimit.count >= RATE_LIMIT_MAX) {
-    return false
-  }
-  
-  userLimit.count++
-  return true
-}
-
 export async function POST(request: NextRequest) {
   try {
-    const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown'
-    
-    // Check rate limit
-    if (!checkRateLimit(ip)) {
-      return NextResponse.json(
-        { error: 'Too many requests. Please try again later.' },
-        { status: 429 }
-      )
-    }
-    
     const body = await request.json()
     const { baseUrl, token } = body
     
