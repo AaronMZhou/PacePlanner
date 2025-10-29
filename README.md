@@ -14,7 +14,11 @@ Currently deployed on paceplanner.vercel.app!
 
 ## Quick Start
 
-### Prerequisites
+### Deployed Website
+
+- Deployed on paceplanner.vercel.app
+
+### Prerequisites (for running on local device)
 
 - Node.js 18+ 
 - pnpm (recommended) or npm
