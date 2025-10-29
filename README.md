@@ -1,6 +1,7 @@
 # PacePlanner
 
-A production-grade Next.js 14 application that connects to Canvas (Instructure) instances to help students plan and manage their assignments with AI-powered time estimation and automatic task breakdown.
+A Next.js 14 application that connects to Canvas (Instructure) instances to help students plan and manage their assignments with AI-powered time estimation and automatic task breakdown.
+Currently deployed on paceplanner.vercel.app!
 
 ## Features
 
